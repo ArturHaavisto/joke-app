@@ -5,7 +5,7 @@ Created by Artur Haavisto
 ## Topic
 Mobile application which shows random jokes.
 
-App uses JokeAPI to get the jokes.
+App uses JokeAPI to get the jokes. (link: https://v2.jokeapi.dev/)
 
 User will have the ability to search jokes that contains certain words.
 
