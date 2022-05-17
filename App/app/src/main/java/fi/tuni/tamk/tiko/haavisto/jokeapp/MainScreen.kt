@@ -5,9 +5,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
+
+val text = mutableStateOf("Joke will be shown here")
 
 @Composable
 fun MainScreen() {
@@ -30,7 +34,8 @@ fun MainScreen() {
                             .verticalScroll(rememberScrollState()),
                         backgroundColor = MaterialTheme.colors.primary
                     ) {
-                        Text("joke will be shown here",
+                        val myText by text
+                        Text(myText,
                         modifier = Modifier.padding(10.dp))
                     }
                 }
@@ -47,7 +52,7 @@ fun MainScreen() {
                         }
                     }
                     Column() {
-                        Button(onClick = { /*TODO*/ }) {
+                        Button(onClick = { getJoke() }) {
                             Text("JOKE")
                         }
                     }
@@ -60,4 +65,13 @@ fun MainScreen() {
             }
         }
     }
+}
+
+
+fun getJoke() {
+    fetchAndParse { insertText(it) }
+}
+
+fun insertText(txt: String) {
+    text.value = txt
 }
