@@ -7,7 +7,10 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
 
@@ -25,7 +28,7 @@ fun MainScreen() {
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
-                    modifier = Modifier.weight(3f, false)
+                    modifier = Modifier.weight(1f, false)
                 ) {
                     Card(
                         modifier = Modifier
@@ -39,27 +42,93 @@ fun MainScreen() {
                         modifier = Modifier.padding(10.dp))
                     }
                 }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .weight(1f, false)
+                Column(
+                    modifier = Modifier.weight(1f, true),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column() {
-                        Button(onClick = { /*TODO*/ }) {
-                            Text("search")
+                    val textState = remember { mutableStateOf(TextFieldValue()) }
+                    Column(
+                        modifier = Modifier.weight(1f, true).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        TextField(
+                            value = textState.value,
+                            onValueChange = { textState.value = it }
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .weight(3f, true)
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "nsfw")
+                                Text(text = "Switch")
+                            }
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "racist")
+                                Text(text = "Switch")
+                            }
+                        }
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "religious")
+                                Text(text = "Switch")
+                            }
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "sexist")
+                                Text(text = "Switch")
+                            }
+                        }
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "political")
+                                Text(text = "Switch")
+                            }
+                            Column(
+                                modifier = Modifier.padding(10.dp),
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(text = "explicit")
+                                Text(text = "Switch")
+                            }
                         }
                     }
-                    Column() {
-                        Button(onClick = { getJoke() }) {
-                            Text("JOKE")
-                        }
-                    }
-                    Column() {
-                        Button(onClick = { /*TODO*/ }) {
-                            Text("flags")
-                        }
+                    Button(
+                        onClick = { getJoke() },
+                        modifier = Modifier
+                            .weight(3f, true)
+                            .fillMaxWidth()
+                    ) {
+                        Text("JOKE")
                     }
                 }
             }
