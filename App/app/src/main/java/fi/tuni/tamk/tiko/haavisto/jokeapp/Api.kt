@@ -12,8 +12,6 @@ fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, ca
     thread {
 
         val url = BASE_URL + constructUrl(flags, search)
-
-
         val client = OkHttpClient()
 
         val request = Request.Builder()
@@ -31,14 +29,13 @@ fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, ca
             if(obj.getString("error") == "true") {
                 callBack(obj.getString("message"))
             }
-            if(obj.getString("type") == "single") {
+            else if(obj.getString("type") == "single") {
                 callBack(obj.getString("joke"))
             } else {
                 val str = obj.getString("setup") + "\n\n" + obj.getString("delivery")
                 callBack(str)
             }
         }
-
     }
 }
 
