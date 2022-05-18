@@ -123,7 +123,7 @@ fun MainScreen() {
                         }
                     }
                     Button(
-                        onClick = { getJoke() },
+                        onClick = { getJoke(search = textState.value.text) },
                         modifier = Modifier
                             .weight(3f, true)
                             .fillMaxWidth()
@@ -137,8 +137,8 @@ fun MainScreen() {
 }
 
 
-fun getJoke() {
-    fetchAndParse { insertText(it) }
+fun getJoke(search: String) {
+    fetchAndParse(search = search) { insertText(it) }
 }
 
 fun insertText(txt: String) {
