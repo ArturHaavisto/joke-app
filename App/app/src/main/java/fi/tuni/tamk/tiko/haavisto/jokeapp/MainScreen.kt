@@ -56,6 +56,13 @@ fun MainScreen() {
                             onValueChange = { textState.value = it }
                         )
                     }
+                    val nsfwCheckedState = remember { mutableStateOf(true) }
+                    val racistCheckedState = remember { mutableStateOf(true) }
+                    val religiousCheckedState = remember { mutableStateOf(true) }
+                    val sexistCheckedState = remember { mutableStateOf(true) }
+                    val politicalCheckedState = remember { mutableStateOf(true) }
+                    val explicitCheckedState = remember { mutableStateOf(true) }
+
                     Row(
                         modifier = Modifier
                             .weight(3f, true)
@@ -73,14 +80,20 @@ fun MainScreen() {
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "nsfw")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = nsfwCheckedState.value,
+                                    onCheckedChange = { nsfwCheckedState.value = it }
+                                )
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "racist")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = racistCheckedState.value,
+                                    onCheckedChange = { racistCheckedState.value = it }
+                                )
                             }
                         }
                         Column(
@@ -92,14 +105,20 @@ fun MainScreen() {
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "religious")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = religiousCheckedState.value,
+                                    onCheckedChange = { religiousCheckedState.value = it }
+                                )
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "sexist")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = sexistCheckedState.value,
+                                    onCheckedChange = { sexistCheckedState.value = it }
+                                )
                             }
                         }
                         Column(
@@ -111,19 +130,32 @@ fun MainScreen() {
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "political")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = politicalCheckedState.value,
+                                    onCheckedChange = { politicalCheckedState.value = it }
+                                )
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Text(text = "explicit")
-                                Text(text = "Switch")
+                                Switch(
+                                    checked = explicitCheckedState.value,
+                                    onCheckedChange = { explicitCheckedState.value = it }
+                                )
                             }
                         }
                     }
                     Button(
-                        onClick = { getJoke(search = textState.value.text) },
+                        onClick = { getJoke(
+                            flags = mapOf(Pair("nsfw", nsfwCheckedState.value),
+                                Pair("religious", religiousCheckedState.value),
+                                Pair("political", politicalCheckedState.value),
+                                Pair("racist", racistCheckedState.value),
+                                Pair("sexist", sexistCheckedState.value),
+                                Pair("explicit", explicitCheckedState.value)),
+                            input = textState.value.text) },
                         modifier = Modifier
                             .weight(3f, true)
                             .fillMaxWidth()
@@ -136,9 +168,27 @@ fun MainScreen() {
     }
 }
 
+fun getJoke(flags: Map<String,Boolean>, input: String) {
+    val flagList: MutableList<String>? = createFlagList(flags)
+    var search: String? = null
+    if(input != "") {search = input}
+    fetchAndParse(flagList, search) { insertText(it) }
+}
 
-fun getJoke(search: String) {
-    fetchAndParse(search = search) { insertText(it) }
+fun createFlagList(flags: Map<String, Boolean>): MutableList<String>? {
+    val stringFlags = mutableListOf<String>()
+    var changeCheck = false
+    flags.forEach {
+        if(!it.value) {
+            stringFlags.add(it.key)
+            changeCheck = true
+        }
+    }
+    return if(changeCheck) {
+        stringFlags
+    } else {
+        null
+    }
 }
 
 fun insertText(txt: String) {
