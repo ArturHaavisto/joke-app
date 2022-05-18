@@ -8,12 +8,16 @@ import kotlin.concurrent.thread
 
 const val BASE_URL= "https://v2.jokeapi.dev/joke/Any"
 
-fun fetchAndParse(callBack: (String) -> Unit) {
+fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, callBack: (String) -> Unit) {
     thread {
+
+        val url = BASE_URL + constructUrl(flags, search)
+
+
         val client = OkHttpClient()
 
         val request = Request.Builder()
-            .url(BASE_URL)
+            .url(url)
             .build()
 
         client.newCall(request).execute().use { response ->
@@ -36,4 +40,27 @@ fun fetchAndParse(callBack: (String) -> Unit) {
         }
 
     }
+}
+
+fun constructUrl(flags: MutableList<String>? = null, search: String? = null): String {
+    var filterString = ""
+    if(flags != null || search != null) {
+        filterString += "?"
+    }
+    if(flags != null) {
+        filterString += "blacklistFlags="
+        flags.forEachIndexed{i, item ->
+            if(i > 0) {
+                filterString += ","
+            }
+            filterString += item
+        }
+    }
+    if(flags != null && search != null) {
+        filterString += "&"
+    }
+    if(search != null) {
+        filterString += "contains=$search"
+    }
+    return filterString
 }
