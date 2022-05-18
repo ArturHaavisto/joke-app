@@ -77,7 +77,8 @@ fun MainScreen() {
                         ) {
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "nsfw")
                                 Switch(
@@ -87,7 +88,8 @@ fun MainScreen() {
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "racist")
                                 Switch(
@@ -102,7 +104,8 @@ fun MainScreen() {
                         ) {
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "religious")
                                 Switch(
@@ -112,7 +115,8 @@ fun MainScreen() {
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "sexist")
                                 Switch(
@@ -127,7 +131,8 @@ fun MainScreen() {
                         ) {
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "political")
                                 Switch(
@@ -137,7 +142,8 @@ fun MainScreen() {
                             }
                             Column(
                                 modifier = Modifier.padding(10.dp),
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(text = "explicit")
                                 Switch(
