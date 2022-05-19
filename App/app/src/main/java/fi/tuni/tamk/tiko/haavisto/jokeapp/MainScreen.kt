@@ -1,5 +1,6 @@
 package fi.tuni.tamk.tiko.haavisto.jokeapp
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,6 +11,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
@@ -20,11 +23,16 @@ val text = mutableStateOf("Press the JOKE button!")
 fun MainScreen() {
     JokeAppTheme {
         // A surface container using the 'background' color from the theme
+        val localFocusManager = LocalFocusManager.current
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
             Column(
+                modifier = Modifier.pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        localFocusManager.clearFocus()
+                    })},
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
