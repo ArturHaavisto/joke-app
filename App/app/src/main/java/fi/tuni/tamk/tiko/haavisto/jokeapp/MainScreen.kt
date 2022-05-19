@@ -44,7 +44,7 @@ fun MainScreen() {
                             .padding(10.dp)
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState()),
-                        backgroundColor = MaterialTheme.colors.primary
+                        backgroundColor = MaterialTheme.colors.secondary
                     ) {
                         val myText by text
                         Text(myText,
