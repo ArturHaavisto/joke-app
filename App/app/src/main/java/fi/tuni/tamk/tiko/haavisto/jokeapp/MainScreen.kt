@@ -53,7 +53,8 @@ fun MainScreen() {
                     ) {
                         TextField(
                             value = textState.value,
-                            onValueChange = { textState.value = it }
+                            onValueChange = { textState.value = it },
+                            placeholder = {Text("Search joke by word/phrase")}
                         )
                     }
                     val nsfwCheckedState = remember { mutableStateOf(true) }
