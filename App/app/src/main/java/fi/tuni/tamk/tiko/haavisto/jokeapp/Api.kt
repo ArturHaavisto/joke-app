@@ -18,24 +18,29 @@ fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, ca
             .url(url)
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+        try {
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
-            for ((name, value) in response.headers) {
-                println("$name: $value")
-            }
+                for ((name, value) in response.headers) {
+                    println("$name: $value")
+                }
 
-            val obj = JSONObject(response.body!!.string())
-            if(obj.getString("error") == "true") {
-                callBack(obj.getString("message"), true)
+                val obj = JSONObject(response.body!!.string())
+                if(obj.getString("error") == "true") {
+                    callBack(obj.getString("message"), true)
+                }
+                else if(obj.getString("type") == "single") {
+                    callBack(obj.getString("joke"), false)
+                } else {
+                    val str = obj.getString("setup") + "\n\n" + obj.getString("delivery")
+                    callBack(str, false)
+                }
             }
-            else if(obj.getString("type") == "single") {
-                callBack(obj.getString("joke"), false)
-            } else {
-                val str = obj.getString("setup") + "\n\n" + obj.getString("delivery")
-                callBack(str, false)
-            }
+        } catch (e: Exception) {
+            callBack("Error, something went wrong!", true)
         }
+
     }
 }
 
