@@ -14,7 +14,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
 
-val text = mutableStateOf("Joke will be shown here")
+val text = mutableStateOf("Press the JOKE button!")
 
 @Composable
 fun MainScreen() {
