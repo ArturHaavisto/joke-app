@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
 
 val text = mutableStateOf("Press the JOKE button!")
+val errorState = mutableStateOf(false)
 
 @Composable
 fun MainScreen() {
@@ -39,12 +40,16 @@ fun MainScreen() {
                 Column(
                     modifier = Modifier.weight(1f, false)
                 ) {
+                    var cardColor = MaterialTheme.colors.secondary
+                    if(errorState.value) {
+                        cardColor = MaterialTheme.colors.error
+                    }
                     Card(
                         modifier = Modifier
                             .padding(10.dp)
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState()),
-                        backgroundColor = MaterialTheme.colors.secondary
+                        backgroundColor = cardColor
                     ) {
                         val myText by text
                         Text(myText,
@@ -203,7 +208,10 @@ fun getJoke(flags: Map<String,Boolean>, input: String) {
     val flagList: MutableList<String>? = createFlagList(flags)
     var search: String? = null
     if(input != "") {search = input}
-    fetchAndParse(flagList, search) { insertText(it) }
+    fetchAndParse(flagList, search) {
+        txt: String, isError: Boolean ->
+        insertText(txt, isError)
+    }
 }
 
 fun createFlagList(flags: Map<String, Boolean>): MutableList<String>? {
@@ -222,6 +230,12 @@ fun createFlagList(flags: Map<String, Boolean>): MutableList<String>? {
     }
 }
 
-fun insertText(txt: String) {
+fun insertText(txt: String, isError: Boolean = false) {
     text.value = txt
+    if(isError) {
+        errorState.value = true
+    }
+    else if(errorState.value) {
+        errorState.value = false
+    }
 }

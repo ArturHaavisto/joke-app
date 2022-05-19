@@ -8,7 +8,7 @@ import kotlin.concurrent.thread
 
 const val BASE_URL= "https://v2.jokeapi.dev/joke/Any"
 
-fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, callBack: (String) -> Unit) {
+fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, callBack: (String, Boolean) -> Unit) {
     thread {
 
         val url = BASE_URL + constructUrl(flags, search)
@@ -27,13 +27,13 @@ fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, ca
 
             val obj = JSONObject(response.body!!.string())
             if(obj.getString("error") == "true") {
-                callBack(obj.getString("message"))
+                callBack(obj.getString("message"), true)
             }
             else if(obj.getString("type") == "single") {
-                callBack(obj.getString("joke"))
+                callBack(obj.getString("joke"), false)
             } else {
                 val str = obj.getString("setup") + "\n\n" + obj.getString("delivery")
-                callBack(str)
+                callBack(str, false)
             }
         }
     }
