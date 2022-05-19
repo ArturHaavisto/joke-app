@@ -8,6 +8,12 @@ import kotlin.concurrent.thread
 
 const val BASE_URL= "https://v2.jokeapi.dev/joke/Any"
 
+/**
+ * Fetches a joke or an error from JokeAPI and returns it.
+ *
+ * JokeAPI can send 3 kinds of json objects. It is either error, single part joke or two part joke.
+ * If fetch does not work, general error is returned.
+ */
 fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, callBack: (String, Boolean) -> Unit) {
     thread {
 
@@ -44,6 +50,9 @@ fun fetchAndParse(flags: MutableList<String>? = null, search: String? = null, ca
     }
 }
 
+/**
+ * Function builds the filter part of the url.
+ */
 fun constructUrl(flags: MutableList<String>? = null, search: String? = null): String {
     var filterString = ""
     if(flags != null || search != null) {

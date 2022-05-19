@@ -18,13 +18,16 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import fi.tuni.tamk.tiko.haavisto.jokeapp.ui.theme.JokeAppTheme
 
+// Text which is used to show default text, jokes and error messages.
 val text = mutableStateOf("Press the JOKE button!")
+
+// If true, joke card background color is turned to red.
 val errorState = mutableStateOf(false)
 
 @Composable
 fun MainScreen() {
     JokeAppTheme {
-        // A surface container using the 'background' color from the theme
+        // Is used to hide keyboard when clicking outside of it.
         val localFocusManager = LocalFocusManager.current
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -84,6 +87,7 @@ fun MainScreen() {
                         Text("Allow following joke types:")
                     }
 
+                    // States of switches
                     val nsfwCheckedState = remember { mutableStateOf(true) }
                     val racistCheckedState = remember { mutableStateOf(true) }
                     val religiousCheckedState = remember { mutableStateOf(true) }
@@ -204,6 +208,9 @@ fun MainScreen() {
     }
 }
 
+/**
+ * Function converts the joke arguments to proper form and calls an API function to get the joke.
+ */
 fun getJoke(flags: Map<String,Boolean>, input: String) {
     val flagList: MutableList<String>? = createFlagList(flags)
     var search: String? = null
@@ -214,6 +221,13 @@ fun getJoke(flags: Map<String,Boolean>, input: String) {
     }
 }
 
+/**
+ * Function takes a map of flag states and returns a list that shows every flag name.
+ *
+ * 'flags' map contains flag names and their indicators(true or false) as switch states. If the
+ * switch state is false(disabled), it means that it is flagged. If there are no flags, null is
+ * returned.
+ */
 fun createFlagList(flags: Map<String, Boolean>): MutableList<String>? {
     val stringFlags = mutableListOf<String>()
     var changeCheck = false
@@ -230,6 +244,10 @@ fun createFlagList(flags: Map<String, Boolean>): MutableList<String>? {
     }
 }
 
+/**
+ * Function inserts either an error message or a joke to the main text. It also changes the error
+ * state.
+ */
 fun insertText(txt: String, isError: Boolean = false) {
     text.value = txt
     if(isError) {
