@@ -56,7 +56,9 @@ fun MainScreen() {
                 ) {
                     val textState = remember { mutableStateOf(TextFieldValue()) }
                     Column(
-                        modifier = Modifier.weight(1f, true).fillMaxWidth(),
+                        modifier = Modifier
+                            .weight(2f, true)
+                            .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         TextField(
@@ -65,6 +67,17 @@ fun MainScreen() {
                             placeholder = {Text("Search joke by word/phrase")}
                         )
                     }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f, true),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text("Allow following joke types:")
+                    }
+
                     val nsfwCheckedState = remember { mutableStateOf(true) }
                     val racistCheckedState = remember { mutableStateOf(true) }
                     val religiousCheckedState = remember { mutableStateOf(true) }
@@ -74,7 +87,7 @@ fun MainScreen() {
 
                     Row(
                         modifier = Modifier
-                            .weight(3f, true)
+                            .weight(4f, true)
                             .fillMaxWidth()
                             .fillMaxHeight(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -172,7 +185,7 @@ fun MainScreen() {
                                 Pair("explicit", explicitCheckedState.value)),
                             input = textState.value.text) },
                         modifier = Modifier
-                            .weight(3f, true)
+                            .weight(4f, true)
                             .fillMaxWidth()
                     ) {
                         Text("JOKE")
