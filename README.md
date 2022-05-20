@@ -15,10 +15,15 @@ User can choose to disable following types of jokes from appearing: nsfw, religi
 Artur Haavisto
 
 # Screenshots
+Dark theme:
 
 ![Screenshot 1, dark mode](Screenshots/image1.png)
 
+Dark theme:
+
 ![Screenshot 2, dark mode](Screenshots/image2.png)
+
+Light theme:
 
 ![Screenshot 3, light mode](Screenshots/image3.jpeg)
 
